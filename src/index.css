@@ -1,0 +1,44 @@
+@import "tailwindcss";
+:root{
+  background-color: darkgray;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.container{
+  background-color: darkgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.chatbot-popup{
+  display: flex;
+  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 500px;
+      width: 500px;
+      background-color: cadetblue;
+}
+.chat-body{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 460px;
+  margin-top: 82px;
+  overflow-y: auto;
+  padding: 25px 22px;
+  scrollbar-width: thin;
+  scrollbar-color: white transparent;
+}
+.chat-body .message{
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+.chat-body .bot-message svg{
+  height: 35px;
+  width: 35px;
+  padding: 15px;
+}
