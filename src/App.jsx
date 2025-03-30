@@ -1,14 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ChatBotIcon from './components/chatBotIcon'
 import ChatForm from './components/ChatForm'
 import ChatMessage from './components/ChatMessage';
+import myInfo from './components/myInfo';
 
 const App=function App() {
-  const [chatHistry, setChatHistry]=useState([]);
+
+  const [chatHistry, setChatHistry]=useState([{
+    hideInChat:true,
+    role:"model",
+    text: myInfo
+  }]);
+  const chatBodyRef=useRef();
 
   const generateBotResponse=async (histry)=>{
     const updateHistry=(text)=>{
-        setChatHistry(prev=>[...prev.filter(msg=>SVGAElement.text!=="Thinking..."),{role:"model",text}])
+        setChatHistry(prev=>[...prev.filter(msg=>SVGAElement.text!=="Thinking"),{role:"model",text}])
     }
     console.log(histry);
     histry=histry.map(({role,text})=>({role,parts:[{text}]}));
@@ -20,7 +27,7 @@ const App=function App() {
       body:JSON.stringify({contents: histry})
     }
     try {
-      const response=await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=AIzaSyDtZ4UozuqKJh0gTqs0q30yG7pDbnagvXs", requestOptions);
+      const response=await fetch(import.meta.env.VITE_API_URL, requestOptions);
       const data=await response.json();
       if(!response.ok)throw new Error(data.error.message || "Something Wrong!!!");
       console.log(data);
@@ -30,27 +37,32 @@ const App=function App() {
       console.log(error)
     }
   };
+ 
+  useEffect(()=>{
+    chatBodyRef.current.scrollTo({top: chatBodyRef.current.scrollHeight, behaviour: "smooth"})
+  },[chatHistry])
+
   return (
-    <div className='container'>
+    <div className='flex justify-center container content-center'>
       <div className='chatbot-popup'>
         {/* Header */}
-        <div className='chat-header'>
-          <div className='header-info'>
+        <div className='flex chat-header bg-amber-500 w-full justify-center text-4xl font-bold '>
+          <div className='flex align-middle header-info'>
             <ChatBotIcon/>
             <h2 className='logo-text'>Chatbot</h2> 
           </div>
-          <button className="material-symbols-outlined">keyboard_arrow_down</button>
+          {/* <button className="material-symbols-outlined">keyboard_arrow_down</button> */}
         </div>
         {/* body */}
-        <div className='chat-body'>
+        <div ref={chatBodyRef}className='chat-body'>
           <div className='message bot-message'>
                <ChatBotIcon/>
-               <p>Hell <br/> how can i help</p>
+               <p>Hello! How can I help you?</p>
           </div>
           {chatHistry.map((chat,index)=>(<ChatMessage key={index} chat={chat}/>))}
           
         </div>
-        <div className='chat-footer'>
+        <div className='flex bg-amber-400 w-full justify-center py-2  chat-footer'>
           <ChatForm chatHistry={chatHistry} setChatHistry={setChatHistry} generateBotResponse={generateBotResponse}/>
         </div>
       </div>
