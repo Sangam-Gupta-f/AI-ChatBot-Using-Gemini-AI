@@ -20,7 +20,7 @@ const App=function App() {
       body:JSON.stringify({contents: histry})
     }
     try {
-      const response=await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=AIzaSyDtZ4UozuqKJh0gTqs0q30yG7pDbnagvXs", requestOptions);
+      const response=await fetch(import.meta.env.VITE_API_URL, requestOptions);
       const data=await response.json();
       if(!response.ok)throw new Error(data.error.message || "Something Wrong!!!");
       console.log(data);
