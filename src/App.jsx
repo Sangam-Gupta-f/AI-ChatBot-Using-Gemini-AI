@@ -15,7 +15,7 @@ const App=function App() {
 
   const generateBotResponse=async (histry)=>{
     const updateHistry=(text)=>{
-        setChatHistry(prev=>[...prev.filter(msg=>SVGAElement.text!=="Thinking"),{role:"model",text}])
+        setChatHistry((prev) => [...prev.filter(msg => msg.text !== "Thinking..."),{role:"model", text: text}])
     }
     console.log(histry);
     histry=histry.map(({role,text})=>({role,parts:[{text}]}));

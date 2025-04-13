@@ -54,3 +54,10 @@ form{
   border-color: lightgray;
   border-radius: 10px;
 }
+.bot-message{
+ color: darkblue;
+ text-align: left;
+}
+.user-message{
+  text-align: right;
+}

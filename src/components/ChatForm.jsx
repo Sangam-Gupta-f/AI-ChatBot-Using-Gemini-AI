@@ -12,11 +12,11 @@ function ChatForm({chatHistry,setChatHistry, generateBotResponse}) {
     inputRef.current.value="";
     setChatHistry((histry)=>[...histry, { role: "user", text:userMessage}])
 
-    setTimeout(()=>{setChatHistry((histry)=>[...histry, { role: "user", text:"Thinking..."}]);
-    generateBotResponse([...chatHistry, {role: "user", text: `using the details provide above, please address this query: ${userMessage}`}])
+    setTimeout(()=>{
+      setChatHistry((histry)=>[...histry, { role: "model", text:"Thinking..."}]);
+      generateBotResponse([...chatHistry, {role: "user", text: `using the details provide above, please address this query: ${userMessage}`}])
   
-  },600
-)
+  },600 )
  }
     
   return (
